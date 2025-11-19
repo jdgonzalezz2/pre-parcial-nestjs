@@ -31,6 +31,8 @@ export class CountriesController {
   @HttpCode(HttpStatus.OK)
   async remove(@Param('code') code: string): Promise<{ message: string }> {
     await this.countriesService.remove(code);
-    return { message: `Country with code ${code} has been deleted successfully` };
+    return {
+      message: `Country with code ${code} has been deleted successfully`,
+    };
   }
 }

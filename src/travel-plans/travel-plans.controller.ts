@@ -41,8 +41,12 @@ export class TravelPlansController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<{ message: string }> {
+  async remove(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<{ message: string }> {
     await this.travelPlansService.remove(id);
-    return { message: `Travel plan with ID ${id} has been deleted successfully` };
+    return {
+      message: `Travel plan with ID ${id} has been deleted successfully`,
+    };
   }
 }
