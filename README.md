@@ -27,13 +27,6 @@ Esta aplicación permite:
 ```bash
 npm install
 ```
-
-### Configuración de la Base de Datos
-
-El proyecto utiliza **SQLite** como base de datos, que se crea automáticamente al ejecutar la aplicación. No se requiere configuración adicional.
-
-El archivo de base de datos (`travel-planner.db`) se creará en la raíz del proyecto.
-
 ### Ejecutar la API
 ```bash
 npm run start:dev
