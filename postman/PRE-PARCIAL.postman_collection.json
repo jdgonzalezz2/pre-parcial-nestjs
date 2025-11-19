@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "47d2bd57-1ef9-4e9c-bf29-f4eab3f36654",
+		"name": "PRE-PARCIAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50178658",
+		"_collection_link": "https://pipipu22225-1557115.postman.co/workspace/Julian-Gonzalez's-Workspace~c6370811-cedb-4be8-8641-0a3d5d4e284b/collection/50178658-47d2bd57-1ef9-4e9c-bf29-f4eab3f36654?action=share&source=collection_link&creator=50178658"
+	},
+	"item": [
+		{
+			"name": "Plan de viaje COL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"countryCode\": \"COL\",\r\n  \"title\": \"Viaje a Colombia\",\r\n  \"startDate\": \"2024-06-01\",\r\n  \"endDate\": \"2024-06-15\",\r\n  \"notes\": \"Visitar Bogotá, Medellín y Cartagena\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/travel-plans",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel-plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Plan de viaje JPN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"countryCode\": \"JPN\",\r\n  \"title\": \"Aventura en Japón\",\r\n  \"startDate\": \"2024-09-01\",\r\n  \"endDate\": \"2024-09-20\",\r\n  \"notes\": \"Visitar Tokio, Kioto, Osaka y el Monte Fuji\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/travel-plans",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel-plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Plan de viaje FRA",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"countryCode\": \"FRA\",\r\n  \"title\": \"Tour por Francia\",\r\n  \"startDate\": \"2024-07-10\",\r\n  \"endDate\": \"2024-07-25\",\r\n  \"notes\": \"París, Lyon, Marsella y la Riviera Francesa\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/travel-plans",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel-plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Paises",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/countries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"countries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Paises por ID COL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/countries/COL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"countries",
+						"COL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Plan de viaje",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/travel-plans",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel-plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Plan de viaje por ID 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/travel-plans/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel-plans",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Plan de viaje por ID COL",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/travel-plans/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel-plans",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
