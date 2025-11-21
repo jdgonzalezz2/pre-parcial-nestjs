@@ -1,51 +1,7 @@
 # Parcial Nestjs
-## Logging de Actividad
+## Puntos desarrollados
 
-La API incluye un middleware de logging que registra todas las peticiones a las rutas `/countries` y `/travel-plans`. Cada petición registra:
-
-- **Método HTTP**: GET, POST, DELETE, etc.
-- **Ruta solicitada**: La URL completa de la petición
-- **Código de estado**: Código HTTP de la respuesta (200, 401, 404, etc.)
-- **Tiempo de procesamiento**: Tiempo total en milisegundos
-
-Los logs se imprimen en la consola con el formato:
-
-```
-[2025-11-21T14:45:23.000Z] GET /countries - 200 - 15ms
-```
-
-## Descripción General
-
-Esta aplicación permite:
-
-- **Gestionar países**: Consultar información de países desde la API RestCountries y almacenarla en una base de datos local (caché)
-- **Gestionar planes de viaje**: Crear y consultar planes de viaje asociados a países específicos
-
-### Módulos Implementados
-
-1. **CountriesModule**: Módulo encargado de gestionar países
-   - Consulta países desde la API ApiCountries (https://www.apicountries.com/countries)
-   - Almacena países en base de datos local (caché)
-   - Implementa lógica de caché: busca primero en BD, si no existe consulta la API externa
-
-2. **TravelPlansModule**: Módulo encargado de gestionar planes de viaje
-   - Crea planes de viaje asociados a países
-   - Valida que el país exista antes de crear el plan
-   - Utiliza el módulo de países para asegurar que el país esté disponible
-
-## Extensiones Implementadas en este Parcial
-
-En esta entrega del parcial, se extendió la API con tres funcionalidades principales para mejorar la seguridad, el control de acceso y el monitoreo de la aplicación.
-
-Se agregó un **endpoint protegido** `DELETE /countries/:code` que permite eliminar países del caché local, implementando validaciones adicionales para prevenir eliminación de países que tienen planes de viaje asociados.
-
-Se implementó un **sistema de autenticación** mediante un guard personalizado que protege endpoints sensibles, requiriendo un API Key válido (`X-API-Key: travel-planner-secret-key-2024`) para operaciones de eliminación.
-
-Finalmente, se incorporó un **middleware de logging** que registra automáticamente todas las peticiones HTTP a las rutas `/countries` y `/travel-plans`, capturando método HTTP, ruta solicitada, código de estado de respuesta y tiempo de procesamiento para facilitar el monitoreo y debugging de la aplicación.
-
-## Funcionamiento y Validación de las Extensiones
-
-### Endpoint Protegido DELETE /countries/:code
+### PARTE A: Endpoint Protegido DELETE /countries/:code
 
 **Funcionamiento:**
 
@@ -62,7 +18,7 @@ Finalmente, se incorporó un **middleware de logging** que registra automáticam
 - **País con planes asociados:** `DELETE /countries/COL` → `400 Bad Request: "Cannot delete country COL because it has associated travel plans"`
 - **Eliminación exitosa:** `DELETE /countries/COL -H "X-API-Key: travel-planner-secret-key-2024"` → `200 OK: "Country with code COL has been deleted successfully"`
 
-### Guard de Autenticación
+### PARTE B: Guard de Autenticación
 
 **Funcionamiento:**
 
