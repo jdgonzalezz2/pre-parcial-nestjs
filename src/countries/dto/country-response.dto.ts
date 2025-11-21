@@ -8,5 +8,5 @@ export class CountryResponseDto {
   flagUrl?: string;
   createdAt: Date;
   updatedAt: Date;
-  source: 'cache' | 'external'; // Indica el origen de la información
+  source: 'cache' | 'external';
 }

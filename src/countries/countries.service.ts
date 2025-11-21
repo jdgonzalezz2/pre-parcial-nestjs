@@ -1,15 +1,18 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Country } from './entities/country.entity';
 import { CountryResponseDto } from './dto/country-response.dto';
 import { ICountryProvider } from './providers/external-country.provider';
+import { TravelPlan } from '../travel-plans/entities/travel-plan.entity';
 
 @Injectable()
 export class CountriesService {
   constructor(
     @InjectRepository(Country)
     private readonly countryRepository: Repository<Country>,
+    @InjectRepository(TravelPlan)
+    private readonly travelPlanRepository: Repository<TravelPlan>,
     @Inject('COUNTRY_PROVIDER')
     private readonly externalCountryProvider: ICountryProvider,
   ) {}
@@ -82,6 +85,17 @@ export class CountriesService {
 
     if (!country) {
       throw new NotFoundException(`Country with code ${code} not found`);
+    }
+
+    // Verificar si existen planes de viaje asociados a este país
+    const associatedPlansCount = await this.travelPlanRepository.count({
+      where: { countryCode: code.toUpperCase() },
+    });
+
+    if (associatedPlansCount > 0) {
+      throw new BadRequestException(
+        `Cannot delete country ${code} because it has associated travel plans`
+      );
     }
 
     await this.countryRepository.remove(country);

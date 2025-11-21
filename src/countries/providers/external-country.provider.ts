@@ -9,40 +9,38 @@ export interface ICountryProvider {
 
 @Injectable()
 export class RestCountriesProvider implements ICountryProvider {
-  private readonly baseUrl = 'https://restcountries.com/v3.1';
+  private readonly baseUrl = 'https://www.apicountries.com/countries';
 
   constructor(private readonly httpService: HttpService) {}
 
   async getCountryByCode(code: string): Promise<CreateCountryDto | null> {
     try {
-      const response = await firstValueFrom(
-        this.httpService.get(`${this.baseUrl}/alpha/${code}`, {
-          params: {
-            fields: 'name,cca3,region,subregion,capital,population,flags',
-          },
-        }),
+      const response = await firstValueFrom(this.httpService.get(this.baseUrl));
+
+      const countries = response.data;
+
+      const countryData = countries.find(
+        (country: any) => country.alpha3Code === code.toUpperCase(),
       );
 
-      const data = response.data;
-
-      if (!data || !data.cca3) {
+      if (!countryData) {
         return null;
       }
 
       return {
-        code: data.cca3,
-        name: data.name?.common || data.name?.official || '',
-        region: data.region || null,
-        subregion: data.subregion || null,
-        capital: Array.isArray(data.capital)
-          ? data.capital[0]
-          : data.capital || null,
-        population: data.population || 0,
-        flagUrl: data.flags?.png || data.flags?.svg || null,
+        code: countryData.alpha3Code,
+        name: countryData.name,
+        region: countryData.region || null,
+        subregion: countryData.subregion || null,
+        capital: Array.isArray(countryData.capital)
+          ? countryData.capital[0]
+          : countryData.capital || null,
+        population: countryData.population || 0,
+        flagUrl: countryData.flags?.svg || countryData.flags?.png || null,
       };
     } catch (error) {
       console.error(
-        `Error fetching country ${code} from RestCountries:`,
+        `Error fetching country ${code} from ApiCountries (https://www.apicountries.com/countries):`,
         error.message,
       );
       return null;

@@ -5,9 +5,11 @@ import {
   Param,
   HttpStatus,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { CountriesService } from './countries.service';
 import { CountryResponseDto } from './dto/country-response.dto';
+import { AuthGuard } from '../common/guards/auth.guard';
 
 @Controller('countries')
 export class CountriesController {
@@ -29,6 +31,7 @@ export class CountriesController {
 
   @Delete(':code')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   async remove(@Param('code') code: string): Promise<{ message: string }> {
     await this.countriesService.remove(code);
     return {

@@ -1,13 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
 import { CountriesController } from './countries.controller';
 import { CountriesService } from './countries.service';
 import { Country } from './entities/country.entity';
+import { TravelPlan } from '../travel-plans/entities/travel-plan.entity';
 import { RestCountriesProvider } from './providers/external-country.provider';
+import { LoggingMiddleware } from '../common/middleware/logging.middleware';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Country]), HttpModule],
+  imports: [TypeOrmModule.forFeature([Country, TravelPlan]), HttpModule],
   controllers: [CountriesController],
   providers: [
     CountriesService,
@@ -19,4 +21,10 @@ import { RestCountriesProvider } from './providers/external-country.provider';
   ],
   exports: [CountriesService],
 })
-export class CountriesModule {}
+export class CountriesModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggingMiddleware)
+      .forRoutes(CountriesController);
+  }
+}
