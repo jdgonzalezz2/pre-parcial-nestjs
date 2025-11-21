@@ -1,7 +1,4 @@
-# API REST para Planificación de Viajes - NestJS
-
-API REST desarrollada con NestJS para gestionar países y planes de viaje, utilizando la API externa ApiCountries (https://www.apicountries.com/countries) como fuente de datos.
-
+# Parcial Nestjs
 ## Logging de Actividad
 
 La API incluye un middleware de logging que registra todas las peticiones a las rutas `/countries` y `/travel-plans`. Cada petición registra:
