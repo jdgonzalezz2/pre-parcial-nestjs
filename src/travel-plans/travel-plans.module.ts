@@ -13,8 +13,6 @@ import { LoggingMiddleware } from '../common/middleware/logging.middleware';
 })
 export class TravelPlansModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggingMiddleware)
-      .forRoutes(TravelPlansController);
+    consumer.apply(LoggingMiddleware).forRoutes(TravelPlansController);
   }
 }

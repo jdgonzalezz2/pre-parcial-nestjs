@@ -1,4 +1,9 @@
-import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Country } from './entities/country.entity';
@@ -94,7 +99,7 @@ export class CountriesService {
 
     if (associatedPlansCount > 0) {
       throw new BadRequestException(
-        `Cannot delete country ${code} because it has associated travel plans`
+        `Cannot delete country ${code} because it has associated travel plans`,
       );
     }
 

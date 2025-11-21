@@ -36,6 +36,82 @@ Esta aplicación permite:
    - Valida que el país exista antes de crear el plan
    - Utiliza el módulo de países para asegurar que el país esté disponible
 
+## Extensiones Implementadas en este Parcial
+
+En esta entrega del parcial, se extendió la API con tres funcionalidades principales para mejorar la seguridad, el control de acceso y el monitoreo de la aplicación.
+
+Se agregó un **endpoint protegido** `DELETE /countries/:code` que permite eliminar países del caché local, implementando validaciones adicionales para prevenir eliminación de países que tienen planes de viaje asociados.
+
+Se implementó un **sistema de autenticación** mediante un guard personalizado que protege endpoints sensibles, requiriendo un API Key válido (`X-API-Key: travel-planner-secret-key-2024`) para operaciones de eliminación.
+
+Finalmente, se incorporó un **middleware de logging** que registra automáticamente todas las peticiones HTTP a las rutas `/countries` y `/travel-plans`, capturando método HTTP, ruta solicitada, código de estado de respuesta y tiempo de procesamiento para facilitar el monitoreo y debugging de la aplicación.
+
+## Funcionamiento y Validación de las Extensiones
+
+### Endpoint Protegido DELETE /countries/:code
+
+**Funcionamiento:**
+
+- Elimina un país específico del caché local de la base de datos
+- Requiere autenticación mediante API Key
+- Valida que el país no tenga planes de viaje asociados antes de permitir la eliminación
+- Retorna confirmación de eliminación exitosa
+
+**Validación:**
+
+- **Sin autenticación:** `DELETE /countries/COL` → `401 Unauthorized: "API key is required"`
+- **API Key inválida:** `DELETE /countries/COL -H "X-API-Key: wrong"` → `401 Unauthorized: "Invalid API key"`
+- **País no existe:** `DELETE /countries/XYZ` → `404 Not Found: "Country with code XYZ not found"`
+- **País con planes asociados:** `DELETE /countries/COL` → `400 Bad Request: "Cannot delete country COL because it has associated travel plans"`
+- **Eliminación exitosa:** `DELETE /countries/COL -H "X-API-Key: travel-planner-secret-key-2024"` → `200 OK: "Country with code COL has been deleted successfully"`
+
+### Guard de Autenticación
+
+**Funcionamiento:**
+
+- Implementado en `src/common/guards/auth.guard.ts`
+- Verifica la presencia del header `X-API-Key`
+- Compara el valor del header con la clave secreta hardcodeada
+- Solo se aplica al endpoint `DELETE /countries/:code`
+- Bloquea la ejecución del método si la autenticación falla
+
+**Validación:**
+
+```bash
+# Prueba sin header
+curl -X DELETE http://localhost:3000/countries/COL
+# Resultado: 401 Unauthorized
+
+# Prueba con header correcto
+curl -X DELETE http://localhost:3000/countries/COL -H "X-API-Key: travel-planner-secret-key-2024"
+# Resultado: Pasa al siguiente paso de validación
+```
+
+### Middleware de Logging
+
+**Funcionamiento:**
+
+- Implementado en `src/common/middleware/logging.middleware.ts`
+- Aplicado únicamente a los módulos `CountriesModule` y `TravelPlansModule`
+- Registra cada petición HTTP que llega a estas rutas
+- Captura timestamp, método HTTP, ruta, código de estado y tiempo de procesamiento
+- Los logs se imprimen directamente en la consola del servidor
+
+**Validación:**
+
+```bash
+# Iniciar servidor
+npm run start
+
+# En otra terminal, hacer peticiones
+curl http://localhost:3000/countries
+curl -X POST http://localhost:3000/travel-plans -H "Content-Type: application/json" -d '{"countryCode":"COL","title":"Test","startDate":"2024-01-01","endDate":"2024-01-05"}'
+
+# Logs en consola del servidor:
+# [2025-11-21T15:05:20.000Z] GET /countries - 200 - 25ms
+# [2025-11-21T15:05:22.000Z] POST /travel-plans - 201 - 45ms
+```
+
 ## Autenticación
 
 Algunos endpoints requieren autenticación mediante API Key. Debes incluir el siguiente header en las peticiones:

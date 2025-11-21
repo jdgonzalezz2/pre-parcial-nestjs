@@ -7,13 +7,12 @@ export class LoggingMiddleware implements NestMiddleware {
     const { method, originalUrl } = req;
     const startTime = Date.now();
 
-    // Registrar cuando la respuesta termine
     res.on('finish', () => {
       const { statusCode } = res;
       const processingTime = Date.now() - startTime;
 
       console.log(
-        `[${new Date().toISOString()}] ${method} ${originalUrl} - ${statusCode} - ${processingTime}ms`
+        `[${new Date().toISOString()}] ${method} ${originalUrl} - ${statusCode} - ${processingTime}ms`,
       );
     });
 

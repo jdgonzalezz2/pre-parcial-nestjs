@@ -7,7 +7,7 @@ import {
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  private readonly validApiKey = 'travel-planner-secret-key-2024'; // En producción, esto vendría de config
+  private readonly validApiKey = 'travel-planner-secret-key-2024';
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();

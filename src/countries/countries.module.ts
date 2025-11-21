@@ -23,8 +23,6 @@ import { LoggingMiddleware } from '../common/middleware/logging.middleware';
 })
 export class CountriesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggingMiddleware)
-      .forRoutes(CountriesController);
+    consumer.apply(LoggingMiddleware).forRoutes(CountriesController);
   }
 }
