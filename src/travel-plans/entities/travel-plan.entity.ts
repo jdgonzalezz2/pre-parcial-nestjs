@@ -11,7 +11,7 @@ export class TravelPlan {
   id: number;
 
   @Column({ length: 3 })
-  countryCode: string; // Código alpha-3 del país destino
+  countryCode: string;
 
   @Column()
   title: string;

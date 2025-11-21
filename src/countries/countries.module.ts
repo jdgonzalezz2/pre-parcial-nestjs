@@ -17,6 +17,6 @@ import { RestCountriesProvider } from './providers/external-country.provider';
       useClass: RestCountriesProvider,
     },
   ],
-  exports: [CountriesService], // Exportar para que TravelPlansModule pueda usarlo
+  exports: [CountriesService],
 })
 export class CountriesModule {}

@@ -9,7 +9,7 @@ import {
 @Entity('countries')
 export class Country {
   @PrimaryColumn({ length: 3 })
-  code: string; // Código alpha-3 (ej: "COL", "FRA")
+  code: string;
 
   @Column()
   name: string;

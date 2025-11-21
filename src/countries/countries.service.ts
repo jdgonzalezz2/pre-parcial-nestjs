@@ -26,7 +26,6 @@ export class CountriesService {
   }
 
   async findOneByCode(code: string): Promise<CountryResponseDto> {
-    // Buscar primero en la base de datos (caché)
     const cachedCountry = await this.countryRepository.findOne({
       where: { code: code.toUpperCase() },
     });
@@ -38,7 +37,6 @@ export class CountriesService {
       };
     }
 
-    // Si no existe en caché, consultar la API externa
     const externalCountry = await this.externalCountryProvider.getCountryByCode(
       code.toUpperCase(),
     );
@@ -47,7 +45,6 @@ export class CountriesService {
       throw new NotFoundException(`Country with code ${code} not found`);
     }
 
-    // Guardar en la base de datos
     const newCountry = this.countryRepository.create(externalCountry);
     const savedCountry = await this.countryRepository.save(newCountry);
 
@@ -58,7 +55,6 @@ export class CountriesService {
   }
 
   async ensureCountryExists(code: string): Promise<Country> {
-    // Buscar en caché
     let country = await this.countryRepository.findOne({
       where: { code: code.toUpperCase() },
     });
@@ -67,7 +63,6 @@ export class CountriesService {
       return country;
     }
 
-    // Si no existe, obtener de la API externa
     const externalCountry = await this.externalCountryProvider.getCountryByCode(
       code.toUpperCase(),
     );
@@ -76,7 +71,6 @@ export class CountriesService {
       throw new NotFoundException(`Country with code ${code} not found`);
     }
 
-    // Guardar en la base de datos
     country = this.countryRepository.create(externalCountry);
     return await this.countryRepository.save(country);
   }

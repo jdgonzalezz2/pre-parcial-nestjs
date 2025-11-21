@@ -11,7 +11,7 @@ import { TravelPlan } from './travel-plans/entities/travel-plan.entity';
       type: 'sqlite',
       database: 'travel-planner.db',
       entities: [Country, TravelPlan],
-      synchronize: true, // En producción usar migraciones
+      synchronize: true,
       logging: false,
     }),
     CountriesModule,

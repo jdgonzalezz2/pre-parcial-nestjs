@@ -21,7 +21,6 @@ export class TravelPlansService {
   async create(
     createTravelPlanDto: CreateTravelPlanDto,
   ): Promise<TravelPlanResponseDto> {
-    // Validar que la fecha de fin sea posterior a la fecha de inicio
     const startDate = new Date(createTravelPlanDto.startDate);
     const endDate = new Date(createTravelPlanDto.endDate);
 
@@ -29,12 +28,10 @@ export class TravelPlansService {
       throw new BadRequestException('End date must be after start date');
     }
 
-    // Verificar que el país exista (si no existe, se creará desde la API externa)
     await this.countriesService.ensureCountryExists(
       createTravelPlanDto.countryCode,
     );
 
-    // Crear el plan de viaje
     const travelPlan = this.travelPlanRepository.create({
       countryCode: createTravelPlanDto.countryCode.toUpperCase(),
       title: createTravelPlanDto.title,
